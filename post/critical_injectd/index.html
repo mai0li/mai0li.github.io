@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="utf-8" />
+
+  
+  <title>Notes on Electra&#39;s/@i41nbeer&#39;s inject_criticald</title>
+
+  
+  
+
+
+
+
+
+  
+  <meta name="author" content="Pedro Maioli" />
+  <meta name="description" content="Understanding how your tweaks get enabled in Electra. " />
+
+  
+  
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@oakle" />
+    <meta name="twitter:title" content="Notes on Electra&#39;s/@i41nbeer&#39;s inject_criticald" />
+    <meta name="twitter:description" content="Understanding how your tweaks get enabled in Electra. " />
+    <meta name="twitter:image" content="https://cdn-images-1.medium.com/max/800/1*wLGLHAeWMCeRf-2vbboYjQ.png" />
+  
+
+  
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Notes on Electra&#39;s/@i41nbeer&#39;s inject_criticald" />
+  <meta property="og:description" content="Understanding how your tweaks get enabled in Electra. " />
+  <meta property="og:url" content="https://mai0li.github.io/post/critical_injectd/" />
+  <meta property="og:image" content="https://cdn-images-1.medium.com/max/800/1*wLGLHAeWMCeRf-2vbboYjQ.png" />
+
+
+
+
+<meta name="generator" content="Hugo 0.44" />
+
+
+<link rel="canonical" href="https://mai0li.github.io/post/critical_injectd/" />
+<link rel="alternative" href="https://mai0li.github.io/index.xml" title="InnerSpeaker" type="application/atom+xml" />
+
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="format-detection" content="telephone=no,email=no,adress=no" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+
+
+<meta name="robots" content="index,follow" />
+<meta name="referrer" content="origin-when-cross-origin" />
+<meta name="google-site-verification" content="64WN4sgvTVdE8kim7yi2jGHWxpiVRxktflm9A52WeUw" />
+<meta name="msvalidate.01" content="59334F67CF537C0638E739FF1A938E21" />
+
+
+
+
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="InnerSpeaker" />
+<meta name="msapplication-tooltip" content="InnerSpeaker" />
+<meta name='msapplication-navbutton-color' content="#5fbf5e" />
+<meta name="msapplication-TileColor" content="#5fbf5e" />
+<meta name="msapplication-TileImage" content="/img/tile-image-windows.png" />
+<link rel="icon" href="https://mai0li.github.io/img/favicon.ico" />
+<link rel="icon" type="image/png" sizes="16x16" href="https://mai0li.github.io/img/favicon-16x16.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="https://mai0li.github.io/img/favicon-32x32.png" />
+<link rel="icon" sizes="192x192" href="https://mai0li.github.io/img/touch-icon-android.png" />
+<link rel="apple-touch-icon" href="https://mai0li.github.io/img/touch-icon-apple.png" />
+<link rel="mask-icon" href="https://mai0li.github.io/img/safari-pinned-tab.svg" color="#5fbf5e" />
+
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/video.js/6.2.8/alt/video-js-cdn.min.css" />
+
+<link rel="stylesheet" href="https://mai0li.github.io/css/bundle.ff02473a9a.css" />
+
+
+  
+  <!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <script src="//cdn.bootcss.com/video.js/6.2.8/ie8/videojs-ie8.min.js"></script>
+  <![endif]-->
+
+<!--[if lte IE 11]>
+    <script src="//cdn.bootcss.com/classlist/1.1.20170427/classList.min.js"></script>
+  <![endif]-->
+
+
+<script src="//cdn.bootcss.com/object-fit-images/3.2.3/ofi.min.js"></script>
+
+
+<script src="//cdn.bootcss.com/smooth-scroll/12.1.4/js/smooth-scroll.polyfills.min.js"></script>
+
+
+</head>
+  <body>
+    
+    <div class="suspension">
+      <a title="Go to top" class="to-top is-hide"><span class="icon icon-up"></span></a>
+      
+        
+      
+    </div>
+    
+    
+  <header class="site-header">
+  <img class="avatar" src="https://avatars1.githubusercontent.com/u/7331302?s=460&amp;v=4" alt="Avatar">
+  
+  <h2 class="title">InnerSpeaker</h2>
+  
+  <p class="subtitle">notes on information security</p>
+  <button class="menu-toggle" type="button">
+    <span class="icon icon-menu"></span>
+  </button>
+  <nav class="site-menu collapsed">
+    <h2 class="offscreen">Main Menu</h2>
+    <ul class="menu-list">
+      
+      
+      
+      
+        <li class="menu-item
+            
+            
+            
+              is-active
+            ">
+            <a href="https://mai0li.github.io/">Home</a>
+          </li>
+      
+        <li class="menu-item
+            
+            
+            ">
+            <a href="https://github.com/mai0li">Works</a>
+          </li>
+      
+        <li class="menu-item
+            
+            
+            ">
+            <a href="https://mai0li.github.io/tags/">Tags</a>
+          </li>
+      
+        <li class="menu-item
+            
+            
+            ">
+            <a href="https://mai0li.github.io/links/">Links</a>
+          </li>
+      
+        <li class="menu-item
+            
+            
+            ">
+            <a href="https://mai0li.github.io/about/">About</a>
+          </li>
+      
+    </ul>
+  </nav>
+  <nav class="social-menu collapsed">
+    <h2 class="offscreen">Social Networks</h2>
+    <ul class="social-list">
+
+      
+      <li class="social-item">
+        <a href="mailto:opponent%20at%20protonmail%20d0t%20c0m" title="Email"><span class="icon icon-email"></span></a>
+      </li>
+
+      
+      <li class="social-item">
+        <a href="//github.com/mai0li" title="GitHub"><span class="icon icon-github"></span></a>
+      </li>
+
+      <li class="social-item">
+        <a href="//twitter.com/oakle" title="Twitter"><span class="icon icon-twitter"></span></a>
+      </li>
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <li class="social-item">
+        <a href="//medium.com/@oakle" title="Medium"><span class="icon icon-medium"></span></a>
+      </li>
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <li class="social-item">
+        <a href="https://mai0li.github.io/index.xml"><span class="icon icon-rss" title="RSS"></span></a>
+      </li>
+
+    </ul>
+  </nav>
+</header>
+
+  <section class="main post-detail">
+    <header class="post-header">
+      <h1 class="post-title">Notes on Electra&#39;s/@i41nbeer&#39;s inject_criticald</h1>
+      <p class="post-meta">@Pedro Maioli · Jul 19, 2018 · 3 min read</p>
+    </header>
+    <article class="post-content"><p>Understanding how your tweaks get enabled in Electra.
+</p>
+
+<h3 id="the-trigger">The trigger</h3>
+
+<p>It all started from this tweet:</p>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">If you want to enable tweaks after jailbreaking without tweaks on Electra: <a href="https://t.co/eA1GqxJbGd">pic.twitter.com/eA1GqxJbGd</a></p>&mdash; Jake James  (@Jakeashacks) <a href="https://twitter.com/Jakeashacks/status/1019536048383250432?ref_src=twsrc%5Etfw">July 18, 2018</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+<p>Before some developer wraps this procedure into an useful tweak, I tried to understand what&rsquo;s actually happening there. Luckily, CoolStar had just <a href="https://github.com/coolstar/electra1131">open-sourced an Electra1131 build</a> a couple hours before Jake&rsquo;s tweet. Thank you, CoolStar!</p>
+
+<hr />
+
+<h3 id="the-magic-line">The magic line</h3>
+
+<p><code>inject_criticald 1 /electra/pspawn_payload.dylib</code></p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*6-soJkV8t8HBsGB8U-tS-g.png#center" alt="" /></p>
+
+<p>Its arguments are pretty simple: take a pid (in our case, pid 1 equals <em>launchd</em>) and inject a library into it.</p>
+
+<hr />
+
+<h3 id="down-the-rabbit-hole">Down the rabbit hole</h3>
+
+<p>Most subroutines are already described in previously released Ian Beer&rsquo;s exploitations:</p>
+
+<blockquote>
+<h4 id="take-launchd-pid-get-a-task-port-achieve-tfp0">Take launchd pid -&gt; get a task port # -&gt; achieve tfp0.</h4>
+</blockquote>
+
+<p>Since we have root access (and now, tfp0), the injection can be achieved.</p>
+
+<p>We proceed to find the start address of *launchd* process by using Ian Beer&rsquo;s binary_load_address (it grabs the address from the second argument of mach_vm_region. Check it at <a href="https://bugs.chromium.org/p/project-zero/issues/detail?id=1247#c3"><em>triple_fetch</em></a> for a deep understanding).</p>
+
+<p>We&rsquo;ve arrived at the first console logging line (Address is at 0000&hellip;).</p>
+
+<p>Here&rsquo;s the final <em>inject_criticald</em> procedure call:</p>
+
+<p><code>call_remote(remoteTask, dlopen, 2, REMOTE_CSTRING(loaded_dylib), REMOTE_LITERAL(RTLD_NOW));</code></p>
+
+<p>This procedure uses <code>dlopen()</code> function to load our library into <em>launchd</em>. The <em>RTLD_NOW</em> flag makes sure all undefined symbols in the library are resolved before dlopen() returns.</p>
+
+<p>Somewhere along the call_remote road, the second console logging line warns us about the success of the <code>find_blr_x19_gadget()</code> function, which has to do with ROP and the inner workings of (again) Ian Beer&rsquo;s triple_fetch exploit.</p>
+
+<blockquote>
+<p>Our loaded_dylib (<em>/electra/pspawn_payload.dylib</em>, if you remember well) is successfully injected :)</p>
+</blockquote>
+
+<hr />
+
+<h3 id="why-dylibbin">Why dylibbin&rsquo;?</h3>
+
+<p>Here&rsquo;s a brief look into *pspawn_payload* bin:</p>
+
+
+<figure>
+    
+        <img src="https://cdn-images-1.medium.com/max/800/1*B233CVfARjI4GyeFZANJLg.png" alt="Cool. Let&#39;s check where `getpid() == 1` happens." />
+    
+    
+    <figcaption>
+        <p>
+        Cool. Let&#39;s check where `getpid() == 1` happens.
+        
+            
+        
+        </p> 
+    </figcaption>
+    
+</figure>
+
+
+<p>There it is:</p>
+
+
+<figure>
+    
+        <img src="https://cdn-images-1.medium.com/max/800/1*wLGLHAeWMCeRf-2vbboYjQ.png" alt="Mind the creation of a pthread with the function `thd_func` passed as argument." />
+    
+    
+    <figcaption>
+        <p>
+        Mind the creation of a pthread with the function `thd_func` passed as argument.
+        
+            
+        
+        </p> 
+    </figcaption>
+    
+</figure>
+
+
+
+<figure>
+    
+        <img src="https://cdn-images-1.medium.com/max/800/1*3ODREdZfvbgl4syICEAsew.png" alt="Our exploit now knows how to spawn whatever Daemons it wishes." />
+    
+    
+    <figcaption>
+        <p>
+        Our exploit now knows how to spawn whatever Daemons it wishes.
+        
+            
+        
+        </p> 
+    </figcaption>
+    
+</figure>
+
+
+<p>The rebindings described allow us to fake spawn Daemons (more specifically, every Daemon found at <em>/Library/LaunchDaemons/</em>), including our dearest <em>/usr/libexec/cydia/startup</em>, which activates our tweaks without (luckily!) causing panics/loops that would require a reboot.</p>
+
+<p>Since we&rsquo;re already at a jailbroken state, CoolStar&rsquo;s *jailbreakd* Daemon is already active before these steps &mdash; and thus, it is skipped. The same goes on for *sshd* (OpenSSH).</p>
+
+<hr />
+
+<h4 id="making-tweaks-appear-windows-restart-to-apply-changes">Making tweaks appear (Windows&rsquo; &ldquo;restart to apply changes&rdquo;)</h4>
+
+<p>If we compare Jakes&rsquo; flow against CoolStar&rsquo;s, we&rsquo;ll see the only diff is the post injecting process to make changes apply: while Jake&rsquo;s only resprings the device, CoolStar&rsquo;s does a wider cleaning by using <code>ldrestart</code> as described in his tweet:</p>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Little known tip: run “ldrestart” as root to restart iOS without rebooting the kernel or exiting jailbroken state (preserves uptime)</p>&mdash; CoolStar (@coolstarorg) <a href="https://twitter.com/coolstarorg/status/991847869903654913?ref_src=twsrc%5Etfw">May 3, 2018</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+<p>That&rsquo;s all, folks. Thank you for reading this far :)</p>
+
+<hr />
+
+<p>Special thanks to:</p>
+
+<p><a href="https://twitter.com/coolstarorg">Coolstar</a> and <a href="https://twitter.com/Electra_Team">Electra Team</a> for an amazing jailbreak tool</p>
+
+<p><a href="https://twitter.com/i41nbeer">Ian Beer</a> for amazing iOS kernel research</p>
+
+<p><a href="https://twitter.com/jakeashacks">Jake James</a> for provoking my curiosity</p>
+
+<p><a href="https://twitter.com/saurik">Jay Freeman</a> for battling jailbreak legality for all these years</p>
+
+<p><a href="https://twitter.com/Apple">Apple</a> for the most amazing mobile OS ever</p></article>
+    <footer class="post-footer">
+      
+      <ul class="post-tags">
+        
+          <li><a href="https://mai0li.github.io/tags/kernel"><span class="tag">Kernel</span></a></li>
+        
+          <li><a href="https://mai0li.github.io/tags/ios"><span class="tag">IOS</span></a></li>
+        
+          <li><a href="https://mai0li.github.io/tags/programming"><span class="tag">Programming</span></a></li>
+        
+          <li><a href="https://mai0li.github.io/tags/jailbreak"><span class="tag">Jailbreak</span></a></li>
+        
+          <li><a href="https://mai0li.github.io/tags/exploit"><span class="tag">Exploit</span></a></li>
+        
+      </ul>
+      
+      <p class="post-copyright">
+        © This post is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License，please give source if you wish to quote or reproduce.
+      </p>
+    </footer>
+    
+      
+    
+  </section>
+  <footer class="site-footer">
+  <p>© 2017-2018 InnerSpeaker</p>
+  <p>Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a> with theme <a href="https://github.com/laozhu/hugo-nuo" target="_blank">Nuo</a>.</p>
+  
+</footer>
+
+
+
+<script async src="//cdn.bootcss.com/video.js/6.2.8/alt/video.novtt.min.js"></script>
+<script async src="//cdn.bootcss.com/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      displayMath: [['$$','$$'], ['\\[','\\]']],
+      processEscapes: true,
+      processEnvironments: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      TeX: { equationNumbers: { autoNumber: "AMS" },
+      extensions: ["AMSmath.js", "AMSsymbols.js"] }
+    }
+  });
+</script>
+<script type="text/x-mathjax-config">
+  // Fix <code> tags after MathJax finishes running. This is a
+  // hack to overcome a shortcoming of Markdown. Discussion at
+  // https://github.com/mojombo/jekyll/issues/199
+  MathJax.Hub.Queue(() => {
+    MathJax.Hub.getAllJax().map(v => v.SourceElement().parentNode.className += ' has-jax');
+  });
+</script>
+
+<script src="https://mai0li.github.io/js/bundle.d1288006cf.js"></script>
+
+
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-122808963-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+  </body>
+</html>
